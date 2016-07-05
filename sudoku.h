@@ -1,6 +1,9 @@
 #ifndef __SUDOKU_H__
 #define __SUDOKU_H__
 
+#define FALSE 0
+#define TRUE  1
+
 #define BLANK '.'
 #define MIN_VALUE '1'
 #define MAX_VALUE '9'

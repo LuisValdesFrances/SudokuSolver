@@ -2,8 +2,6 @@
 
 #include "sudoku.h"
 
-#define FALSE 0
-#define TRUE  1
 
 int isFull(sudokuGrid game) {return 0;}
 cell getFreeCell(sudokuGrid game) {return 0;}
@@ -43,15 +41,10 @@ int hasSolution(sudokuGrid game) {
 void readGame(sudokuGrid game){
 	int i = 0;
 	char c;
-	int num;
 	while(i < GRID_SIZE){
 
 		scanf("%c", &c);
-		num = (int)c;
-		if((num > 48 && num < 58) || num == 46){//No escaneo la mierda
-			if(num == 46){
-				c = 46;
-			}
+		if((c >= MIN_VALUE && c <= MAX_VALUE) || c == BLANK){//No escaneo la mierda
 			game[i] = c;
 			i++;
 		}
@@ -60,23 +53,16 @@ void readGame(sudokuGrid game){
 
 void showGame(sudokuGrid game){
 	int i = 0;
-	//int fileSpace = 2;
 	while(i < GRID_SIZE){
-
-
-		int fileSize = MAX_VALUE - '0';//No se como funciona este cast pero tira
-		if(game[i] != 46){
-			printf("%c", game[i]);
-		}else{
-			printf(".");
-		}
+		printf("%c", game[i]);
 		printf(" ");
 		if((i+1) % BLOCK_SIZE == 0){
 			printf(" ");
 		}
-		if((i+1) % fileSize  == 0){
+		if((i+1) % NUM_VALUES  == 0){
 			printf("\n");
-		}if((i+1) % (fileSize * BLOCK_SIZE) == 0){
+		}
+		if((i+1) % (NUM_VALUES * BLOCK_SIZE) == 0){
 			printf("\n");
 		}
 		i++;
