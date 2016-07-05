@@ -2,13 +2,7 @@
 
 #include "sudoku.h"
 
-
-int isFull(sudokuGrid game) {return 0;}
-cell getFreeCell(sudokuGrid game) {return 0;}
 int isLegal(sudokuGrid game, cell aCell, value aValue) {return 0;}
-void setCell(sudokuGrid game, cell aCell, value aValue){}
-value getCell(sudokuGrid game, cell aCell){ return '0';}
-void clearCell(sudokuGrid game, cell aCell){}
 
 int hasSolution(sudokuGrid game) {
 	int solved;
@@ -67,5 +61,38 @@ void showGame(sudokuGrid game){
 		}
 		i++;
 	}
-	printf("\n");
+}
+
+int isFull(sudokuGrid game) {
+	int i = 0;
+	while(i < GRID_SIZE){
+		if(game[i] == BLANK){
+			return FALSE;
+		}
+		i++;
+	}
+	return TRUE;
+}
+
+cell getFreeCell(sudokuGrid game) {
+	int i = 0;
+	while(i < GRID_SIZE){
+		if(game[i] == BLANK){
+			return i;
+		}
+		i++;
+	}
+	return -1;
+}
+
+void setCell(sudokuGrid game, cell aCell, value aValue){
+	game[aCell] = aValue;
+}
+
+value getCell(sudokuGrid game, cell aCell){ 
+	return game[aCell];
+}
+
+void clearCell(sudokuGrid game, cell aCell){
+	game[aCell] = BLANK;
 }

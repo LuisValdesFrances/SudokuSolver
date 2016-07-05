@@ -9,11 +9,9 @@ int main(int argc, char *argv[]) {
 	test();
 	sudokuGrid game;
 	readGame(game);
-	printf("readGame ok\n");
 	
 	printf("Input:\n");
 	showGame(game);
-	printf("showGame ok\n");
 
 	printf("\n");
 	if (hasSolution(game)) {
