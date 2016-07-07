@@ -116,10 +116,19 @@ void testIsLegal(){
 		'.','3','.', '.','.','2', '.','4','.',
 		'8','.','4', '.','.','.', '.','1','.'
 	};
-	//assert(isLegal(input, 0, '0'));
-	//assert(!isLegal(input, 0, '8'));
+	assert(isLegal(input, 0, '0'));
+	assert(!isLegal(input, 0, '8'));
 	assert(isLegal(input, 11, '2'));
-	//assert(!isLegal(input, 11, '4'));
+	assert(!isLegal(input, 11, '4'));
+	assert(isLegal(input, 40, '0'));
+	assert(!isLegal(input, 40, '5'));
+	assert(isLegal(input, 40, '8'));
+	assert(!isLegal(input, 40, '3'));
+	assert(isLegal(input, 80, '2'));
+	assert(!isLegal(input, 80, '4'));
+	assert(isLegal(input, 80, '3'));
+	assert(!isLegal(input, 80, '8'));
+	assert(!isLegal(input, 80, '7'));
 
 	
 }

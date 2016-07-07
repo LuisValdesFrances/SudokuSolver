@@ -5,17 +5,23 @@
 int isLegal(sudokuGrid game, cell aCell, value aValue) {
 	int legal = TRUE;
 	int i = 0;
-	int row = aCell / NUM_VALUES;
-	int column = aCell % NUM_VALUES;
+	int cellRow = aCell / NUM_VALUES;
+	int cellColumn = aCell % NUM_VALUES;
 	int currentFirstCellInRow;
+	int currentRow;
+	int currentColumn;
 	int firsRowBlock;
 	int lastRowBlock;
-	printf("column: ");
-	printf("%d\n", column);
+	int headBlock = -1;
+	int endBlock = -1;
+	int headBlockRow;
+	int headBlockColumn;
+	int headRow;
 	
 	while(i < GRID_SIZE && legal){
 		//Search at the row
-		if(i / NUM_VALUES == row){
+		if(i / NUM_VALUES == cellRow){
+			
 			if(game[i] == aValue){
 				legal = FALSE;
 			}
@@ -26,7 +32,8 @@ int isLegal(sudokuGrid game, cell aCell, value aValue) {
 		}
 		//Search at the column
 		currentFirstCellInRow = (i / NUM_VALUES) * (NUM_VALUES);
-		if(i == (currentFirstCellInRow + column)){
+		if(i == (currentFirstCellInRow + cellColumn)){
+			
 			if(game[i] == aValue){
 				legal = FALSE;
 			}
@@ -36,18 +43,58 @@ int isLegal(sudokuGrid game, cell aCell, value aValue) {
 			*/
 		}
 		//Search at the block
-		firsRowBlock = ((aCell)/BLOCK_SIZE) * BLOCK_SIZE;
-		lastRowBlock = firsRowBlock + (BLOCK_SIZE-1);
-		
-		if(i >= firsRowBlock && i <= lastRowBlock){
-			printf("%c", game[i]);
-			printf(", ");
+		currentRow= i / NUM_VALUES;
+		currentColumn = i % NUM_VALUES;
+		if(headBlock == -1){
+			//i is in a head
+			if(currentRow%BLOCK_SIZE == 0 && currentColumn%BLOCK_SIZE == 0){
+				headBlock = i;
+				endBlock = (NUM_VALUES * (currentRow+2)) + (currentColumn+2);
+				headRow = currentRow;
+				headBlockRow = headBlock / NUM_VALUES;
+				headBlockColumn = headBlock % NUM_VALUES;
+
+				//i is outside head
+				if(aCell <= headBlock || aCell >= endBlock 
+					|| cellRow < headBlockRow || cellRow > headBlockRow + BLOCK_SIZE
+					|| cellColumn < headBlockColumn || cellColumn > headBlockColumn + BLOCK_SIZE){
+					headBlock = -1;
+				}
+				/*
+				else{
+					printf("head and end: ");
+					printf("%d", headBlock);
+					printf(", ");
+					printf("%d\n", endBlock);
+				}
+				*/
+			}
 		}
+		if(headBlock != -1 && i <= endBlock){
+
+			firsRowBlock = headBlock + (NUM_VALUES * (currentRow - headRow));
+			lastRowBlock = firsRowBlock + (BLOCK_SIZE-1);
+		
+			if(i >= firsRowBlock && i <= lastRowBlock){
+				///*
+				if(game[i] == aValue){
+					legal = FALSE;
+				}
+				//*/
+				/*
+				printf("%c", game[i]);
+				printf(", ");
+				*/
+			}
+		}
+		//headBlock = pow(firsRowBlock, currentCell) + currentColumn;
+
+		
 		i++;
 	}
 	return legal;
 }
-/*
+
 int hasSolution(sudokuGrid game) {
 	int solved;
 	if (isFull(game)){
@@ -75,11 +122,11 @@ int hasSolution(sudokuGrid game) {
 	}
 	return solved;
 }
-*/
+/*
 int hasSolution(sudokuGrid game) {
 	return FALSE;
 }
-
+*/
 void readGame(sudokuGrid game){
 	int i = 0;
 	char c;
