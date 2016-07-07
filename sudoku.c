@@ -171,13 +171,15 @@ int isFull(sudokuGrid game) {
 
 cell getFreeCell(sudokuGrid game) {
 	int i = 0;
-	while(i < GRID_SIZE){
+	int cell = -1;
+	while(i < GRID_SIZE && cell == -1){
 		if(game[i] == BLANK){
-			return i;
+			cell =  i;
+		}else{
+			i++;
 		}
-		i++;
 	}
-	return -1;
+	return cell;
 }
 
 void setCell(sudokuGrid game, cell aCell, value aValue){
