@@ -2,8 +2,52 @@
 
 #include "sudoku.h"
 
-int isLegal(sudokuGrid game, cell aCell, value aValue) {return 0;}
-
+int isLegal(sudokuGrid game, cell aCell, value aValue) {
+	int legal = TRUE;
+	int i = 0;
+	int row = aCell / NUM_VALUES;
+	int column = aCell % NUM_VALUES;
+	int currentFirstCellInRow;
+	int firsRowBlock;
+	int lastRowBlock;
+	printf("column: ");
+	printf("%d\n", column);
+	
+	while(i < GRID_SIZE && legal){
+		//Search at the row
+		if(i / NUM_VALUES == row){
+			if(game[i] == aValue){
+				legal = FALSE;
+			}
+			/*
+			printf("%c", game[i]);
+			printf(", ");
+			*/
+		}
+		//Search at the column
+		currentFirstCellInRow = (i / NUM_VALUES) * (NUM_VALUES);
+		if(i == (currentFirstCellInRow + column)){
+			if(game[i] == aValue){
+				legal = FALSE;
+			}
+			/*
+			printf("%c", game[i]);
+			printf(", ");
+			*/
+		}
+		//Search at the block
+		firsRowBlock = ((aCell)/BLOCK_SIZE) * BLOCK_SIZE;
+		lastRowBlock = firsRowBlock + (BLOCK_SIZE-1);
+		
+		if(i >= firsRowBlock && i <= lastRowBlock){
+			printf("%c", game[i]);
+			printf(", ");
+		}
+		i++;
+	}
+	return legal;
+}
+/*
 int hasSolution(sudokuGrid game) {
 	int solved;
 	if (isFull(game)){
@@ -30,6 +74,10 @@ int hasSolution(sudokuGrid game) {
 		}
 	}
 	return solved;
+}
+*/
+int hasSolution(sudokuGrid game) {
+	return FALSE;
 }
 
 void readGame(sudokuGrid game){

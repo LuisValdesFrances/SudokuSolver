@@ -18,8 +18,8 @@ void test() {
 	testSetCell();
 	testClearCell();
 	testIsFull();
+	testIsLegal();
 	//testHasSolution();
-	//testIsLegal();
 	printf("All passed!\n");
 }
 
@@ -99,10 +99,32 @@ void testIsFull(){
 		i++;
 	}
 	assert(!isFull(input));
-
 }
 
 void testIsLegal(){
 	printf("testIsLegal\n");
+	value input[] = {
+		'.','9','.', '.','.','.', '8','.','4',
+		'.','8','.', '5','.','.', '.','3','.',
+		'3','.','.', '.','.','6', '7','.','.',
+
+		'.','.','.', '.','.','5', '.','.','7',
+		'.','.','3', '.','.','.', '2','.','.',
+		'1','.','.', '4','.','.', '.','.','.',
+
+		'.','.','5', '6','.','.', '.','.','9',
+		'.','3','.', '.','.','2', '.','4','.',
+		'8','.','4', '.','.','.', '.','1','.'
+	};
+	//assert(isLegal(input, 0, '0'));
+	//assert(!isLegal(input, 0, '8'));
+	assert(isLegal(input, 11, '2'));
+	//assert(!isLegal(input, 11, '4'));
+
 	
 }
+
+void testHasSolution(){
+
+}
+
