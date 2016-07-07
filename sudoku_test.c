@@ -9,8 +9,9 @@ void testGetCell();
 void testSetCell();
 void testClearCell();
 void testIsFull();
-void testHasSolution();
 void testIsLegal();
+void testHasSolution();
+
  
 void test() {
 	testGetFreeCell();
@@ -19,7 +20,7 @@ void test() {
 	testClearCell();
 	testIsFull();
 	testIsLegal();
-	//testHasSolution();
+	testHasSolution();
 	printf("All passed!\n");
 }
 
@@ -155,11 +156,39 @@ void testIsLegal(){
 	assert(!isLegal(input2, 40, '7'));
 	assert(!isLegal(input2, 40, '8'));
 	assert(!isLegal(input2, 40, '9'));
-
-	
 }
 
 void testHasSolution(){
+	printf("testHasSolution\n");
 
+	value input[] = {
+		'.','9','.', '.','.','.', '8','.','4',
+		'.','8','.', '5','.','.', '.','3','.',
+		'3','.','.', '.','.','6', '7','.','.',
+
+		'.','.','.', '.','.','5', '.','.','7',
+		'.','.','3', '.','.','.', '2','.','.',
+		'1','.','.', '4','.','.', '.','.','.',
+
+		'.','.','5', '6','.','.', '.','.','9',
+		'.','3','.', '.','.','2', '.','4','.',
+		'8','.','4', '.','.','.', '.','1','.'
+	};
+	assert(hasSolution(input));
+
+	value input2[] = {
+		'0','9','.', '.','.','.', '8','.','4',
+		'.','8','.', '5','.','.', '.','3','.',
+		'3','.','.', '.','.','6', '7','.','.',
+
+		'.','.','.', '.','.','5', '.','.','7',
+		'.','.','3', '.','.','.', '2','.','.',
+		'1','.','.', '4','.','.', '.','.','.',
+
+		'.','.','5', '6','.','.', '.','.','9',
+		'.','3','.', '.','.','2', '.','4','.',
+		'8','.','4', '.','.','.', '.','1','.'
+	};
+	assert(!hasSolution(input2));
 }
 
