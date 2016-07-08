@@ -17,6 +17,7 @@ int isLegal(sudokuGrid game, cell aCell, value aValue) {
 	int headBlockRow;
 	int headBlockColumn;
 	int headRow;
+	int blockEndMatrix = BLOCK_SIZE-1;
 	
 	while(i < GRID_SIZE && legal){
 		//Search at the row
@@ -39,7 +40,7 @@ int isLegal(sudokuGrid game, cell aCell, value aValue) {
 			//i is in a head
 			if(currentRow%BLOCK_SIZE == 0 && currentColumn%BLOCK_SIZE == 0){
 				headBlock = i;
-				endBlock = (NUM_VALUES * (currentRow+2)) + (currentColumn+2);
+				endBlock = (NUM_VALUES * (currentRow+blockEndMatrix)) + (currentColumn+blockEndMatrix);
 				headRow = currentRow;
 				headBlockRow = headBlock / NUM_VALUES;
 				headBlockColumn = headBlock % NUM_VALUES;
@@ -47,7 +48,7 @@ int isLegal(sudokuGrid game, cell aCell, value aValue) {
 				//i is outside head
 				if(aCell < headBlock || aCell > endBlock 
 					|| cellRow < headBlockRow || cellRow > headBlockRow + (BLOCK_SIZE-1)
-					|| cellColumn < headBlockColumn || cellColumn > headBlockColumn + (BLOCK_SIZE-1)){
+					|| cellColumn < headBlockColumn || cellColumn > headBlockColumn + blockEndMatrix){
 					headBlock = -1;
 				}
 			}
@@ -55,7 +56,7 @@ int isLegal(sudokuGrid game, cell aCell, value aValue) {
 		if(headBlock != -1 && i <= endBlock){
 
 			firsRowBlock = headBlock + (NUM_VALUES * (currentRow - headRow));
-			lastRowBlock = firsRowBlock + (BLOCK_SIZE-1);
+			lastRowBlock = firsRowBlock + blockEndMatrix;
 		
 			if(i >= firsRowBlock && i <= lastRowBlock){
 				if(game[i] == aValue){
