@@ -21,9 +21,6 @@ int main(int argc, char *argv[]) {
 		printf("There's no solution\n");
 	}
 
-	//printf("Solution:\n");
-	//showGame(game);
-
 	return EXIT_SUCCESS;
 }
 
