@@ -21,29 +21,19 @@ int isLegal(sudokuGrid game, cell aCell, value aValue) {
 	while(i < GRID_SIZE && legal){
 		//Search at the row
 		if(i / NUM_VALUES == cellRow){
-			
 			if(game[i] == aValue){
 				legal = FALSE;
 			}
-			/*
-			printf("%c", game[i]);
-			printf(", ");
-			*/
 		}
 		//Search at the column
 		currentFirstCellInRow = (i / NUM_VALUES) * (NUM_VALUES);
 		if(i == (currentFirstCellInRow + cellColumn)){
-			
 			if(game[i] == aValue){
 				legal = FALSE;
 			}
-			/*
-			printf("%c", game[i]);
-			printf(", ");
-			*/
 		}
 		//Search at the block
-		currentRow= i / NUM_VALUES;
+		currentRow = i / NUM_VALUES;
 		currentColumn = i % NUM_VALUES;
 		if(headBlock == -1){
 			//i is in a head
@@ -55,19 +45,11 @@ int isLegal(sudokuGrid game, cell aCell, value aValue) {
 				headBlockColumn = headBlock % NUM_VALUES;
 
 				//i is outside head
-				if(aCell <= headBlock || aCell >= endBlock 
-					|| cellRow < headBlockRow || cellRow > headBlockRow + BLOCK_SIZE
-					|| cellColumn < headBlockColumn || cellColumn > headBlockColumn + BLOCK_SIZE){
+				if(aCell < headBlock || aCell > endBlock 
+					|| cellRow < headBlockRow || cellRow > headBlockRow + (BLOCK_SIZE-1)
+					|| cellColumn < headBlockColumn || cellColumn > headBlockColumn + (BLOCK_SIZE-1)){
 					headBlock = -1;
 				}
-				/*
-				else{
-					printf("head and end: ");
-					printf("%d", headBlock);
-					printf(", ");
-					printf("%d\n", endBlock);
-				}
-				*/
 			}
 		}
 		if(headBlock != -1 && i <= endBlock){
@@ -76,20 +58,12 @@ int isLegal(sudokuGrid game, cell aCell, value aValue) {
 			lastRowBlock = firsRowBlock + (BLOCK_SIZE-1);
 		
 			if(i >= firsRowBlock && i <= lastRowBlock){
-				///*
 				if(game[i] == aValue){
 					legal = FALSE;
 				}
-				//*/
-				/*
-				printf("%c", game[i]);
-				printf(", ");
-				*/
 			}
 		}
 		//headBlock = pow(firsRowBlock, currentCell) + currentColumn;
-
-		
 		i++;
 	}
 	return legal;
@@ -122,11 +96,7 @@ int hasSolution(sudokuGrid game) {
 	}
 	return solved;
 }
-/*
-int hasSolution(sudokuGrid game) {
-	return FALSE;
-}
-*/
+
 void readGame(sudokuGrid game){
 	int i = 0;
 	char c;
@@ -160,13 +130,15 @@ void showGame(sudokuGrid game){
 
 int isFull(sudokuGrid game) {
 	int i = 0;
-	while(i < GRID_SIZE){
+	int full = TRUE;
+	while(i < GRID_SIZE && full == TRUE){
 		if(game[i] == BLANK){
-			return FALSE;
+			full = FALSE;
+		}else{
+			i++;
 		}
-		i++;
 	}
-	return TRUE;
+	return full;
 }
 
 cell getFreeCell(sudokuGrid game) {
