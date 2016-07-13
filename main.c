@@ -7,7 +7,7 @@
 int main(int argc, char *argv[]) {
 
 	test();
-	sudokuGrid game;
+	SudokuGrid game = makeSudokuGrid();
 	readGame(game);
 	
 	printf("Input:\n");
@@ -20,6 +20,8 @@ int main(int argc, char *argv[]) {
 	} else {
 		printf("There's no solution\n");
 	}
+
+	destroySudokuGrid(&game);
 
 	return EXIT_SUCCESS;
 }

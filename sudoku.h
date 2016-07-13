@@ -16,17 +16,21 @@
 
 typedef char value;
 typedef int cell;
-typedef value sudokuGrid[GRID_SIZE];
+
+typedef struct _sudokuGrid *SudokuGrid;
+
+SudokuGrid makeSudokuGrid();
+void destroySudokuGrid(SudokuGrid *game);
 
 
-void readGame(sudokuGrid game);
-void showGame(sudokuGrid game);
-int hasSolution(sudokuGrid game);
-int isFull(sudokuGrid game);
-cell getFreeCell(sudokuGrid game);
-int isLegal(sudokuGrid game, cell aCell, value aValue);
-void setCell(sudokuGrid game, cell aCell, value aValue);
-value getCell(sudokuGrid game, cell aCell);
-void clearCell(sudokuGrid game, cell aCell);
+void readGame(SudokuGrid game);
+void showGame(SudokuGrid game);
+int hasSolution(SudokuGrid game);
+int isFull(SudokuGrid game);
+cell getFreeCell(SudokuGrid game);
+int isLegal(SudokuGrid game, cell aCell, value aValue);
+void setCell(SudokuGrid game, cell aCell, value aValue);
+value getCell(SudokuGrid game, cell aCell);
+void clearCell(SudokuGrid game, cell aCell);
 
 #endif
