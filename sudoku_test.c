@@ -4,6 +4,8 @@
 #include "sudoku_test.h"
 #include "sudoku.h"
 
+void testMakeSudokuGrid();
+void testDestroySudokuGrid();
 void testGetFreeCell();
 void testGetCell();
 void testSetCell();
@@ -11,19 +13,36 @@ void testClearCell();
 void testIsFull();
 void testIsLegal();
 void testHasSolution();
-void testDestroySudokuGrid();
 
- 
-void test() {
+
+ void test() {
+	testMakeSudokuGrid();
 	testGetFreeCell();
 	testGetCell();
 	testSetCell();
 	testClearCell();
-	//testIsFull();
-	//testIsLegal();
-	//testHasSolution();
+	testIsFull();
+	testIsLegal();
+	testHasSolution();
 	testDestroySudokuGrid();
 	printf("All passed!\n");
+}
+
+void testMakeSudokuGrid(){
+	printf("testMakeSudokuGrid\n");
+	SudokuGrid sg = makeSudokuGrid();
+	assert(sg != NULL);
+	
+}
+
+void testDestroySudokuGrid(){
+	printf("testDestroySudokuGrid\n");
+	//Si makeSudokuGrid devuelve un puntero...
+	SudokuGrid sg = makeSudokuGrid();
+	//Porque necesito hacer casting para una funcion que acepta un puntero como parametro???
+	destroySudokuGrid((SudokuGrid*)sg);
+	assert(sg == NULL);
+	
 }
 
 void testGetFreeCell(){
@@ -73,31 +92,24 @@ void testClearCell(){
 	assert(getCell(sg, aCell) == BLANK);
 }
 
-void testDestroySudokuGrid(){
-	printf("testDestroySudokuGrid\n");
-	SudokuGrid sg = makeSudokuGrid();
-	//assert(sg != NULL);
-	//destroySudokuGrid(sg);
-	//assert(sg == NULL);
-}
-
-/*
 void testIsFull(){
 	printf("testIsFull\n");
 	//Full
 	SudokuGrid sg = makeSudokuGrid();
 	int i = 0;
 	while(i < GRID_SIZE){
+		clearCell(sg, i);
+		i++;
+	}
+	assert(!isFull(sg));
+	//Not full
+	i = 0;
+	while(i < GRID_SIZE){
 		setCell(sg, i, MIN_VALUE);
 		i++;
 	}
 	assert(isFull(sg));
-	//Not full
-	cell aCell = GRID_SIZE/2;
-	setCell(sg, aCell, BLANK);
-	assert(!isFull(sg));
 }
-
 
 void testIsLegal(){
 	printf("testIsLegal\n");
@@ -115,15 +127,21 @@ void testIsLegal(){
 		'9','3','7', '1','5','2', '6','4','8',
 		'8','6','4', '9','7','3', '5','1','2'
 	};
-	assert(!isLegal(input, 0, '1'));
-	assert(!isLegal(input, 0, '2'));
-	assert(!isLegal(input, 0, '3'));
-	assert(!isLegal(input, 0, '4'));
-	assert(isLegal(input, 0, '5'));
-	assert(!isLegal(input, 0, '6'));
-	assert(!isLegal(input, 0, '7'));
-	assert(!isLegal(input, 0, '8'));
-	assert(!isLegal(input, 0, '9'));
+	SudokuGrid sg = makeSudokuGrid();
+	int i = 0;
+	while(i < GRID_SIZE){
+		setCell(sg, i, input[i]);
+		i++;
+	}
+	assert(!isLegal(sg, 0, '1'));
+	assert(!isLegal(sg, 0, '2'));
+	assert(!isLegal(sg, 0, '3'));
+	assert(!isLegal(sg, 0, '4'));
+	assert(isLegal(sg, 0, '5'));
+	assert(!isLegal(sg, 0, '6'));
+	assert(!isLegal(sg, 0, '7'));
+	assert(!isLegal(sg, 0, '8'));
+	assert(!isLegal(sg, 0, '9'));
 	
 	value input2[] = {
 		'5','9','6', '7','3','1', '8','2','4',
@@ -138,15 +156,22 @@ void testIsLegal(){
 		'9','3','7', '1','5','2', '6','4','8',
 		'8','6','4', '9','7','3', '5','1','2'
 	};
-	assert(!isLegal(input2, 40, '1'));
-	assert(!isLegal(input2, 40, '2'));
-	assert(!isLegal(input2, 40, '3'));
-	assert(!isLegal(input2, 40, '4'));
-	assert(!isLegal(input2, 40, '5'));
-	assert(isLegal(input2, 40, '6'));
-	assert(!isLegal(input2, 40, '7'));
-	assert(!isLegal(input2, 40, '8'));
-	assert(!isLegal(input2, 40, '9'));
+	sg = makeSudokuGrid();
+	i = 0;
+	while(i < GRID_SIZE){
+		setCell(sg, i, input2[i]);
+		i++;
+	}
+
+	assert(!isLegal(sg, 40, '1'));
+	assert(!isLegal(sg, 40, '2'));
+	assert(!isLegal(sg, 40, '3'));
+	assert(!isLegal(sg, 40, '4'));
+	assert(!isLegal(sg, 40, '5'));
+	assert(isLegal(sg, 40, '6'));
+	assert(!isLegal(sg, 40, '7'));
+	assert(!isLegal(sg, 40, '8'));
+	assert(!isLegal(sg, 40, '9'));
 
 	value input3[] = {
 		'5','9','6', '7','3','1', '8','2','4',
@@ -161,15 +186,22 @@ void testIsLegal(){
 		'9','3','7', '1','5','2', '6','4','8',
 		'8','6','4', '9','7','3', '5','1','2'
 	};
-	assert(!isLegal(input3, 60, '1'));
-	assert(!isLegal(input3, 60, '2'));
-	assert(isLegal(input3, 60, '3'));
-	assert(!isLegal(input3, 60, '4'));
-	assert(!isLegal(input3, 60, '5'));
-	assert(!isLegal(input3, 60, '6'));
-	assert(!isLegal(input3, 60, '7'));
-	assert(!isLegal(input3, 60, '8'));
-	assert(!isLegal(input3, 60, '9'));
+	sg = makeSudokuGrid();
+	i = 0;
+	while(i < GRID_SIZE){
+		setCell(sg, i, input3[i]);
+		i++;
+	}
+
+	assert(!isLegal(sg, 60, '1'));
+	assert(!isLegal(sg, 60, '2'));
+	assert(isLegal(sg, 60, '3'));
+	assert(!isLegal(sg, 60, '4'));
+	assert(!isLegal(sg, 60, '5'));
+	assert(!isLegal(sg, 60, '6'));
+	assert(!isLegal(sg, 60, '7'));
+	assert(!isLegal(sg, 60, '8'));
+	assert(!isLegal(sg, 60, '9'));
 
 	value input4[] = {
 		'5','9','6', '7','3','1', '8','2','4',
@@ -184,17 +216,24 @@ void testIsLegal(){
 		'9','3','7', '1','5','2', '6','4','8',
 		'8','6','4', '9','7','.', '5','1','2'
 	};
-	assert(!isLegal(input4, 77, '1'));
-	assert(!isLegal(input4, 77, '2'));
-	assert(isLegal(input4, 77, '3'));
-	assert(!isLegal(input4, 77, '4'));
-	assert(!isLegal(input4, 77, '5'));
-	assert(!isLegal(input4, 77, '6'));
-	assert(!isLegal(input4, 77, '7'));
-	assert(!isLegal(input4, 77, '8'));
-	assert(!isLegal(input4, 77, '9'));
+	sg = makeSudokuGrid();
+	i = 0;
+	while(i < GRID_SIZE){
+		setCell(sg, i, input4[i]);
+		i++;
+	}
+
+	assert(!isLegal(sg, 77, '1'));
+	assert(!isLegal(sg, 77, '2'));
+	assert(isLegal(sg, 77, '3'));
+	assert(!isLegal(sg, 77, '4'));
+	assert(!isLegal(sg, 77, '5'));
+	assert(!isLegal(sg, 77, '6'));
+	assert(!isLegal(sg, 77, '7'));
+	assert(!isLegal(sg, 77, '8'));
+	assert(!isLegal(sg, 77, '9'));
 }
-/*
+
 void testHasSolution(){
 	printf("testHasSolution\n");
 	
@@ -211,8 +250,20 @@ void testHasSolution(){
 		'.','3','.', '.','.','2', '.','4','.',
 		'8','.','4', '.','.','.', '.','1','.'
 	};
-	assert(hasSolution(input));
-	
+
+	SudokuGrid sg = makeSudokuGrid();
+	int i = 0;
+	while(i < GRID_SIZE){
+		if(input[i] == BLANK){
+			clearCell(sg, i);
+		}else{
+			setCell(sg, i, input[i]);
+		}
+		i++;
+	}
+
+	assert(hasSolution(sg));
+
 	value input2[] = {
 		'2','9','.', '.','.','.', '8','.','4',
 		'.','8','.', '5','.','.', '.','3','.',
@@ -226,8 +277,17 @@ void testHasSolution(){
 		'.','3','.', '.','.','2', '.','4','.',
 		'8','.','4', '.','.','.', '.','1','.'
 	};
-	assert(!hasSolution(input2));
+
+	sg = makeSudokuGrid();
+	i = 0;
+	while(i < GRID_SIZE){
+		if(input2[i] == BLANK){
+			clearCell(sg, i);
+		}else{
+			setCell(sg, i, input2[i]);
+		}
+		i++;
+	}
+	assert(!hasSolution(sg));
 	
 }
-
-*/
