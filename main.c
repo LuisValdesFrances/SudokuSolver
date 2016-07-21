@@ -12,6 +12,8 @@ int main(int argc, char *argv[]) {
 	
 	printf("Input:\n");
 	showGame(game);
+	printf("Number free cell: ");
+	printf("%d\n", getNumberFreeCell(game));
 
 	printf("\n");
 	if (hasSolution(game)) {

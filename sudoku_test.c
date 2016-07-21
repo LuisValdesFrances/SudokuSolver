@@ -39,8 +39,7 @@ void testDestroySudokuGrid(){
 	printf("testDestroySudokuGrid\n");
 	//Si makeSudokuGrid devuelve un puntero...
 	SudokuGrid sg = makeSudokuGrid();
-	//Porque necesito hacer casting para una funcion que acepta un puntero como parametro???
-	destroySudokuGrid((SudokuGrid*)sg);
+	destroySudokuGrid(&sg);
 	assert(sg == NULL);
 	
 }
@@ -254,9 +253,12 @@ void testHasSolution(){
 	SudokuGrid sg = makeSudokuGrid();
 	int i = 0;
 	while(i < GRID_SIZE){
-		if(input[i] == BLANK){
-			clearCell(sg, i);
-		}else{
+		clearCell(sg, i);
+		i++;
+	}
+	i = 0;
+	while(i < GRID_SIZE){
+		if(input[i] != BLANK){
 			setCell(sg, i, input[i]);
 		}
 		i++;
@@ -281,13 +283,18 @@ void testHasSolution(){
 	sg = makeSudokuGrid();
 	i = 0;
 	while(i < GRID_SIZE){
-		if(input2[i] == BLANK){
-			clearCell(sg, i);
-		}else{
+		clearCell(sg, i);
+		i++;
+	}
+	i = 0;
+	while(i < GRID_SIZE){
+		if(input2[i] != BLANK){
 			setCell(sg, i, input2[i]);
 		}
 		i++;
 	}
+	printf("Number free cell: ");
+	printf("%d\n", getNumberFreeCell(sg));
 	assert(!hasSolution(sg));
 	
 }

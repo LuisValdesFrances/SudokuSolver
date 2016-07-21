@@ -32,5 +32,6 @@ int isLegal(SudokuGrid game, cell aCell, value aValue);
 void setCell(SudokuGrid game, cell aCell, value aValue);
 value getCell(SudokuGrid game, cell aCell);
 void clearCell(SudokuGrid game, cell aCell);
+int getNumberFreeCell(SudokuGrid game);
 
 #endif

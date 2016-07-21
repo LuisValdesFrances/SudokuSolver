@@ -93,11 +93,7 @@ static int isLegalInBlock(SudokuGrid game, cell aCell, value aValue) {
 		y++;
 	}
 	return result;
-
-
 }
-
-
 
 int isLegal(SudokuGrid game, cell aCell, value aValue) {
 
