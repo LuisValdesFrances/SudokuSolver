@@ -37,7 +37,6 @@ void testMakeSudokuGrid(){
 
 void testDestroySudokuGrid(){
 	printf("testDestroySudokuGrid\n");
-	//Si makeSudokuGrid devuelve un puntero...
 	SudokuGrid sg = makeSudokuGrid();
 	destroySudokuGrid(&sg);
 	assert(sg == NULL);
